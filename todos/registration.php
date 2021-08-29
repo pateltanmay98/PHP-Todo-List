@@ -2,9 +2,10 @@
     include('Database.php');
     include('generalFunction.php');
 
+    $getDatabase = new Database();
+
     if(isset($_POST['submit']))
     {
-        $getDatabase = new Database();
 
         $name=$_POST['name'];
         $email=$_POST['email'];
@@ -18,20 +19,23 @@
 
         $insertEffect = $getDatabase->insertUserInfo($insertUser);
 
+        echo "<script> alert('You are registered!') </script>";
+        header('Location: index.php');
+
     }
 ?>
 
 <html>
 
-<head>
-  <title>Todo Notes</title>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="../Library/Bootstrap/css/bootstrap.min.css">
-  <script type="text/javascript" src="../Library/jQuery.min.js"></script>
-  <script type="text/javascript" src="../Library/jQUery-validation.js"></script>
-  <script type="text/javascript" src="../Library/Bootstrap/js/bootstrap.min.js"></script>
-</head>
+  <head>
+    <title>Todo Notes</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="../Library/Bootstrap/css/bootstrap.min.css">
+    <script type="text/javascript" src="../Library/jQuery.min.js"></script>
+    <script type="text/javascript" src="../Library/jQUery-validation.js"></script>
+    <script type="text/javascript" src="../Library/Bootstrap/js/bootstrap.min.js"></script>
+  </head>
 
   <body>
 

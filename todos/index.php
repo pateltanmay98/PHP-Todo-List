@@ -1,8 +1,28 @@
 <?php
+  session_start();
+
+  include('Database.php');
+  include('generalFunction.php');
+
+  $getDatabase = new Database();
+
   if(isset($_POST['submit']))
   {
     $email = $_POST['email'];
     $password = $_POST['password'];
+    $getEncryptedPassword = $getDatabase->getUserPassword($email);
+    $decryptedPassword = getDecryptedText($getEncryptedPassword);
+    
+    if($decryptedPassword == $password)
+    {
+      $_SESSION['id'] = $email;
+      header('Location: todos.php');
+    }
+    else
+    {
+      echo "<script> alert('Invalid authentication information') </script>";
+      header('Location: index.php');
+    }
   }
 ?>
 
