@@ -1,44 +1,12 @@
 <?php
     session_start();
 
-    include('Database.php');
+    include('crud/Database.php');
     include('generalFunction.php');
 
     $getDatabase = new Database();
     $email = $_SESSION['id'];
     $userName = $getDatabase->getUserName($email);
-    $json = array();
-
-    // Insert New Todo
-    if(isset($_POST['request']) == 1)
-    {
-      $newTodo = $_POST['newTodo'];
-      $newTodoPriority = $_POST['newTodoPriority'];
-      $email = $_POST['email'];
-
-      $getEncryptedTodo = getEncryptedText($newTodo);
-
-      $insertTodo['newTodo'] = $getEncryptedTodo;
-      $insertTodo['newTodoPriority'] = $newTodoPriority;
-      $insertTodo['email'] = $email;
-
-      $insertTodoResponse = $getDatabase->insertNewTodo($insertTodo);
-
-      if($insertTodoResponse == 1)
-      {
-        $json['status'] = 1;
-        $json['data'] = "Todo Inserted";
-        echo json_encode($json);
-        exit;
-      }
-      else
-      {
-        $json['status'] = 0;
-        $json['data'] = "Error!!";
-        echo json_encode();
-        exit;
-      }
-    }
 
 ?>
 
@@ -49,13 +17,16 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="../Library/Bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../Library/jquery.dataTables.min.css">
     <link rel="stylesheet" href="./styles.css">
     <script type="text/javascript" src="../Library/jQuery.min.js"></script>
+    <script type="text/javascript" src="../Library/jquery.dataTables.min.js"></script>
     <script type="text/javascript" src="../Library/jQUery-validation.js"></script>
     <script type="text/javascript" src="../Library/Bootstrap/js/bootstrap.min.js"></script>
   </head>
 
   <body>
+    <!-- Header Content -->
     <div class="card bg-dark text-white">
       <div class="card-body">
         <div class="container">
@@ -72,10 +43,12 @@
         </div>
       </div>
     </div>
+
+    <!-- Add New Todo -->
       <div class="ml-2 mr-2 mt-sm-4 border-bottom">
         <form class="row g-3 mt-4" action="#" method="POST">
           <div class="col-md-8">
-            <input type="text" class="form-control" id="addNewTodo">
+            <input type="text" class="form-control" id="addNewTodo" placeholder="Add Todo">
           </div>
           <div class="col-md-2">
             <select class="form-control" id="addNewPriority" aria-label="Default select example">
@@ -89,55 +62,84 @@
         </form>
       </div>
       <input type="hidden" id="sessionEmail" value="<?php echo $email ?>" />
-  </body>
 
-  <script type="text/javascript">
-    $(document).ready(function()
-		{
+      <!-- Data Table to Display Data -->
+      <div class="mt-4 ml-2 mr-2">
+        <table id="todoDataTable" class="table table-bordered table-striped" width="100%">
+          <thead>
+            <tr>
+              <th class="col-md-6">Task</th>
+              <th>Priority</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+        </table>
+      </div>
 
-      $('#submitNewTodo').click(function()
-      {
-        var newTodo = $('#addNewTodo').val().trim();
-        var newTodoPriority = $('#addNewPriority').val().trim();
-        var email = $('#sessionEmail').val().trim();
-        console.log(newTodo);
-        console.log(newTodoPriority);
-        console.log(email);
-
-        if(newTodo != "" && newTodoPriority != "" && email != "" )
+      <script>
+        $(document).ready(function()
         {
-          // Ajax request
-          $.ajax({
-            type: 'POST',
-            data: {request:1, newTodo:newTodo, newTodoPriority:newTodoPriority, email:email},
-            dataType: 'json',
-            success: function(response)
+          // Submit new Todo
+          $('#submitNewTodo').click(function()
+          {
+            var newTodo = $('#addNewTodo').val().trim();
+            var newTodoPriority = $('#addNewPriority').val().trim();
+            var email = $('#sessionEmail').val().trim();
+            console.log(newTodo);
+            console.log(newTodoPriority);
+            console.log(email);
+
+            if(newTodo != "" && newTodoPriority != "" && email != "" )
             {
-              if(response.status == 1)
-              {
-                alert(response.data);
-
-                // Empty and reset the values
-                $('#addNewTodo').val('');
-
-                // Reload Page
-                window.location.reload(true);
-              }
-              else
-              {
-                alert(response.data);
-              }
+              // Ajax request
+              $.ajax({
+                url: 'crud/addTodo.php',
+                type: 'POST',
+                data: {newTodo:newTodo, newTodoPriority:newTodoPriority, email:email},
+                dataType: 'json',
+                success: function(response)
+                {
+                  if(response.status == 1)
+                  {
+                    alert(response.data);
+                    $('#addNewTodo').val(''); // Empty and reset the values
+                    window.location.reload(true); // Reload Page
+                  }
+                  else
+                  {
+                    alert(response.data);
+                  }
+                }
+              }); // ajax bracket closing
             }
-          }); // ajax bracket closing
-        }
-        else
-        {
-          alert('Please fill all fields.');
-        }
+            else
+            {
+              alert('Please fill all fields.');
+            }
+          }); // End of #submitNewTodo click function
 
-      }); // End of #submitNewTodo click function
+          // Display Data Table
+          $('#todoDataTable').DataTable({
+            "processing": true,
+            "serverSide": true,
+            "serverMethod": "POST",
+            "ajax": {
+              'data': function(data)
+              {
+                data.request = 2;
+              }
+            },
+            "columns": [
+              {data: 'task'},
+              {data: 'priority'},
+              {data: 'action1'},
+              {data: 'action1'}
+            ],
+          }); // End of #todoDataTable data table
 
-    }); // End of Ready Function Bracket
-  </script>
+        }); // End of Ready Function Bracket
+      </script>
+
+  </body>
 
 </html>
