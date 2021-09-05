@@ -70,7 +70,8 @@
             <tr>
               <th class="col-md-6">Task</th>
               <th>Priority</th>
-              <th>Action</th>
+              <th>Update</th>
+              <th>Delete</th>
             </tr>
           </thead>
         </table>
@@ -79,15 +80,12 @@
       <script>
         $(document).ready(function()
         {
-          // Submit new Todo
+          // Insert Todo
           $('#submitNewTodo').click(function()
           {
             var newTodo = $('#addNewTodo').val().trim();
             var newTodoPriority = $('#addNewPriority').val().trim();
             var email = $('#sessionEmail').val().trim();
-            console.log(newTodo);
-            console.log(newTodoPriority);
-            console.log(email);
 
             if(newTodo != "" && newTodoPriority != "" && email != "" )
             {
@@ -122,18 +120,15 @@
           $('#todoDataTable').DataTable({
             "processing": true,
             "serverSide": true,
-            "serverMethod": "POST",
             "ajax": {
-              'data': function(data)
-              {
-                data.request = 2;
-              }
+              'url': 'crud/showTodo.php'
             },
+            "serverMethod": "POST",
             "columns": [
               {data: 'task'},
               {data: 'priority'},
-              {data: 'action1'},
-              {data: 'action1'}
+              {data: 'update'},
+              {data: 'delete'}
             ],
           }); // End of #todoDataTable data table
 

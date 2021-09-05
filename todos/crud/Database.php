@@ -13,6 +13,11 @@
             $this->_db_connect = mysqli_connect($this -> servername, $this -> username, $this -> password, $this -> dbname);
         }
 
+        function getDBConnection()
+        {
+            return $this->_db_connect;
+        }
+
         function getUserPassword($email)
         {
             $select = "SELECT password FROM registration WHERE email='".$email."'";
@@ -67,6 +72,20 @@
             {
                 return 0;
             }
+        }
+
+        function getToalNoOfRecords()
+        {
+            $qry = mysqli_query($this->_db_connect, "SELECT COUNT(*) AS totalcount FROM todos");
+            $records = mysqli_fetch_assoc($qry);
+            return $records['totalcount'];
+        }
+
+        function getFilteredNoOfRecords()
+        {
+            $qry = mysqli_query($this->_db_connect, "SELECT COUNT(*) AS filtercount FROM todos WHERE 1".searchString);
+            $records = mysqli_fetch_assoc($qry);
+            return $records['filtercount'];
         }
 
     }
