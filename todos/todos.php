@@ -80,12 +80,12 @@
       <script>
         $(document).ready(function()
         {
+          var email = $('#sessionEmail').val().trim();
           // Insert Todo
           $('#submitNewTodo').click(function()
           {
             var newTodo = $('#addNewTodo').val().trim();
             var newTodoPriority = $('#addNewPriority').val().trim();
-            var email = $('#sessionEmail').val().trim();
 
             if(newTodo != "" && newTodoPriority != "" && email != "" )
             {
@@ -121,7 +121,10 @@
             "processing": true,
             "serverSide": true,
             "ajax": {
-              'url': 'crud/showTodo.php'
+              'url': 'crud/showTodo.php',
+              'data': function(data){
+									data.email = email;
+              }
             },
             "serverMethod": "POST",
             "columns": [

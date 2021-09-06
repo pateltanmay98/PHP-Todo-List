@@ -81,9 +81,9 @@
             return $records['totalcount'];
         }
 
-        function getFilteredNoOfRecords()
+        function getFilteredNoOfRecords($searchString)
         {
-            $qry = mysqli_query($this->_db_connect, "SELECT COUNT(*) AS filtercount FROM todos WHERE 1".searchString);
+            $qry = mysqli_query($this->_db_connect, "SELECT COUNT(*) AS filtercount FROM todos WHERE 1".$searchString);
             $records = mysqli_fetch_assoc($qry);
             return $records['filtercount'];
         }

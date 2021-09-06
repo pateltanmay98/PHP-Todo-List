@@ -7,11 +7,11 @@
 
     if($_POST['newTodo'] && $_POST['newTodoPriority'] && $_POST['email'])
     {
-        $getEncryptedTodo = getEncryptedText($newTodo);
+        $getEncryptedTodo = getEncryptedText($_POST['newTodo']);
 
         $insertTodo['newTodo'] = $getEncryptedTodo;
-        $insertTodo['newTodoPriority'] = $newTodoPriority;
-        $insertTodo['email'] = $email;
+        $insertTodo['newTodoPriority'] = $_POST['newTodoPriority'];
+        $insertTodo['email'] = $_POST['email'];
 
         $insertTodoResponse = $getDatabase->insertNewTodo($insertTodo);
 
@@ -20,14 +20,12 @@
             $json['status'] = 1;
             $json['data'] = "Todo Inserted";
             echo json_encode($json);
-            exit;
         }
         else
         {
             $json['status'] = 0;
             $json['data'] = "Error!!";
             echo json_encode();
-            exit;
         }
         }
 ?>
