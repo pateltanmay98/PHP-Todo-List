@@ -26,14 +26,14 @@
     // Filtered Records
     $totalFilterdRecords = $getDatabase->getFilteredNoOfRecords($searchString);
 
-    // Fetch records for data table email = '"$email."' AND 
+    // Fetch records for data table
     if($_POST['order']['0']['column']!=0)
     {
-        $todoQuery = "SELECT * FROM todos WHERE email = '"$email."' AND ".$searchString." ORDER BY ".$order_column[$_POST['order']['0']['column']]." ".$_POST['order']['0']['dir']." LIMIT ".$row.", ".$rowPerPage;
+        $todoQuery = "SELECT * FROM todos WHERE 1 ".$searchString." AND email='".$email."' ORDER BY ".$order_column[$_POST['order']['0']['column']]." ".$_POST['order']['0']['dir']." LIMIT ".$row.", ".$rowPerPage;
     }
     else
 	{
-		$todoQuery = "SELECT * FROM todos WHERE email = '"$email."' AND ".$searchString." ORDER BY id desc LIMIT ".$row.", ".$rowPerPage;
+		$todoQuery = "SELECT * FROM todos WHERE 1 ".$searchString." AND email='".$email."' ORDER BY id desc LIMIT ".$row.", ".$rowPerPage;
 	}
 
     $todoRecords = mysqli_query($getDatabase->getDBConnection(), $todoQuery);
@@ -42,7 +42,7 @@
     while($row = mysqli_fetch_assoc($todoRecords))
     {
         $data[] = array(
-            'task' => getDecryptedText($row['task']),
+            'task' => $row['task'],
             'priority' => $row['priority'],
             'update' => "<button class='btn btn-warning btn-xs updateTodo' data-id='".$row['id']."' >UPDATE</button>",
             'delete' => "<button class='btn btn-danger btn-xs deleteTodo' data-id='".$row['id']."' >DELETE</button>"

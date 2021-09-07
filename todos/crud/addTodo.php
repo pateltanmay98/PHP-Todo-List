@@ -7,9 +7,7 @@
 
     if($_POST['newTodo'] && $_POST['newTodoPriority'] && $_POST['email'])
     {
-        $getEncryptedTodo = getEncryptedText($_POST['newTodo']);
-
-        $insertTodo['newTodo'] = $getEncryptedTodo;
+        $insertTodo['newTodo'] = $_POST['newTodo'];
         $insertTodo['newTodoPriority'] = $_POST['newTodoPriority'];
         $insertTodo['email'] = $_POST['email'];
 
