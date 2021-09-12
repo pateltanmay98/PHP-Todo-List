@@ -24,7 +24,7 @@
     $totalRecords = $getDatabase->getToalNoOfRecords();
 
     // Filtered Records
-    $totalFilterdRecords = $getDatabase->getFilteredNoOfRecords($searchString);
+    $totalFilterdRecords = $getDatabase->getFilteredNoOfRecords($searchString, $email);
 
     // Fetch records for data table
     if($_POST['order']['0']['column']!=0)

@@ -28,13 +28,7 @@
 <html>
 
   <head>
-    <title>Todo Notes</title>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="../Library/Bootstrap/css/bootstrap.min.css">
-    <script type="text/javascript" src="../Library/jQuery.min.js"></script>
-    <script type="text/javascript" src="../Library/jQUery-validation.js"></script>
-    <script type="text/javascript" src="../Library/Bootstrap/js/bootstrap.min.js"></script>
+    <?php include('header.php'); ?>
   </head>
 
   <body>
