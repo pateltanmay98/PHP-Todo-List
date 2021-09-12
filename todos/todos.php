@@ -186,7 +186,7 @@
           }); // End of - Click on Update Button
 
           // Click on save button on toggled todo update form
-          $(update_todo).click(function(){
+          $('#update_todo').click(function(){
             var id = $('#txt_todoid').val();
             var task = $('#update_todo_text').val().trim();
             var priority = $('#update_priority_text').val().trim();
@@ -204,15 +204,55 @@
                   if(response.status == 1)
                   {
                     alert(response.data);
-
                     // Empty and reset value
-                    
+                    $('#update_todo_text').val('');
+                    $('#txt_todoid').val(0);
+                    $('#update_priority_text').val('High').change();
+                    $('#todoDataTable').DataTable().ajax.reload(); // Reload data table after update record
+                    $('#updateTodoModal').modal('toggle'); // Close update form modal
+                  }
+                  else
+                  {
+				            alert(response.data);
+				          }
+                }
+              }); // End AJAX
+            }
+            else
+            {
+              alert("Please fill all fields");
+            }
+          }); // Ending process of Updating Todo Record
+
+          // Delete Todo Record
+          $('#todoDataTable').on('click', '.deleteTodo', function () {
+            var id = $(this).data('id');
+            var result = confirm( "Do you want to DELETE this task?" );
+
+            if(result)
+            {
+              // AJAX request
+              $.ajax({
+                url: 'crud/deleteTodo.php',
+                type: 'post',
+                data: {id:id},
+                dataType: 'json',
+                success: function(response)
+                {
+                  if(response.status == 1)
+                  {
+                      alert(response.data);
+                      $('#todoDataTable').DataTable().ajax.reload(); // Reload data table after update record
+                  }
+                  else
+                  {
+                    alert(response.data);
                   }
                 }
-              });
-            }
 
-          }); // Ending of Update Todo Record
+              }); // AJAX End
+            }
+          });
 
         }); // End of Ready Function Bracket
       </script>
