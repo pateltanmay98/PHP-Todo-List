@@ -9,17 +9,12 @@
 <script type="text/javascript" src="../Library/jQUery-validation.js"></script>
 <script type="text/javascript" src="../Library/Bootstrap/js/bootstrap.min.js"></script>
 <style>
-    footer {
-        position: fixed;
-        bottom: 0;
-        width: 100%;
-        /* Height of the footer*/ 
-        height: 60px;
-        background: grey;
-    }
     .content {
         max-width: 99.1%;
         margin: auto;
         padding: 0;
+    }
+    .footer-link{
+        color: black;
     }
 </style>
