@@ -18,6 +18,14 @@
             return $this->_db_connect;
         }
 
+        function getEmail($email)
+        {
+            $select = "SELECT email FROM registration WHERE email='".$email."'";
+            $getEmail = mysqli_query($this->_db_connect, $select); 
+            $row = mysqli_fetch_row($getEmail);
+            return $row[0];
+        }
+
         function getUserPassword($email)
         {
             $select = "SELECT password FROM registration WHERE email='".$email."'";

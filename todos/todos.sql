@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Aug 29, 2021 at 04:16 PM
+-- Generation Time: Sep 19, 2021 at 11:09 AM
 -- Server version: 5.7.31
 -- PHP Version: 7.3.21
 
@@ -57,14 +57,17 @@ CREATE TABLE IF NOT EXISTS `todos` (
   `priority` varchar(4) NOT NULL,
   `email` varchar(30) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=32 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `todos`
 --
 
 INSERT INTO `todos` (`id`, `task`, `priority`, `email`) VALUES
-(6, 'NkR5aHk2THd5NllRNWxRRUdkbE9QY0dGbWpsN290dmszcHAveGc5OXhhaz06Or1hafW0SrICY6ZVExe4KRk6Og==', 'high', 'admin@gmail.com');
+(29, 'Testing', 'High', 'admin@gmail.com'),
+(30, 'Testing', 'High', 'admin@gmail.com'),
+(31, 'Testing', 'High', 'admin@gmail.com'),
+(28, 'Testing', 'High', 'admin@gmail.com');
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

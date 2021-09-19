@@ -4,24 +4,42 @@
   include('crud/Database.php');
   include('generalFunction.php');
 
+  if(isset($_SESSION['message']))
+  {
+    $message = $_SESSION['message'];
+    echo '<script type="text/javascript">alert("'.$message.'")</script>';
+    unset($_SESSION['message']);
+  }
+
   $getDatabase = new Database();
 
   if(isset($_POST['submit']))
   {
     $email = $_POST['email'];
-    $password = $_POST['password'];
-    $getEncryptedPassword = $getDatabase->getUserPassword($email);
-    $decryptedPassword = getDecryptedText($getEncryptedPassword);
-    
-    if($decryptedPassword == $password)
+
+    $getEmail = $getDatabase->getEmail($email);
+
+    if($email != $getEmail)
     {
-      $_SESSION['id'] = $email;
-      header('Location: index.php');
+      $_SESSION['message'] = "This email doesn't exist. Please register yourself.";
+      header('Location: registration.php');
     }
     else
     {
-      echo "<script> alert('Invalid authentication information') </script>";
-      header('Location: index.php');
+      $password = $_POST['password'];
+      $getEncryptedPassword = $getDatabase->getUserPassword($email);
+      $decryptedPassword = getDecryptedText($getEncryptedPassword);
+      
+      if($decryptedPassword == $password)
+      {
+        $_SESSION['id'] = $email;
+        header('Location: index.php');
+      }
+      else
+      {
+        echo "<script> alert('Invalid authentication information') </script>";
+        header('Location: index.php');
+      }
     }
   }
     include('header.php'); ?>

@@ -1,16 +1,33 @@
 <?php
+  session_start(); 
+
     include('crud/Database.php');
     include('generalFunction.php');
+
+    if(isset($_SESSION['message']))
+    {
+      $message = $_SESSION['message'];
+      echo '<script type="text/javascript">alert("'.$message.'")</script>';
+      unset($_SESSION['message']);
+    }
 
     $getDatabase = new Database();
 
     if(isset($_POST['submit']))
     {
+      $email=$_POST['email'];
+      $getEmail = $getDatabase->getEmail($email);
 
+      if($email == $getEmail)
+      {
+        $_SESSION['message'] = "This email already exist. Please login.";
+        header('Location: login.php');
+      }
+      else
+      {
         $name=$_POST['name'];
-        $email=$_POST['email'];
         $password=$_POST['password'];
-
+        
         $encryptedPassword = getEncryptedText($password);
 
         $insertUser['name'] = $name;
@@ -21,10 +38,9 @@
 
         echo "<script> alert('You are registered!') </script>";
         header('Location: index.php');
-
+      }
     }
-?>
-    <?php include('header.php'); ?>
+    include('header.php'); ?>
 
     <div class="container-fluid h-100">
       <div class="row justify-content-center align-items-center h-100">
@@ -48,6 +64,7 @@
               <button class="btn btn-info btn-lg btn-block" name="submit">Sign In</button>
             </div>
           </form>
+          <a href="login.php" class="link-primary">Already have account?</a>
         </div>
       </div>
     </div>
