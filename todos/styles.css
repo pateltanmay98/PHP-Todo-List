@@ -1,3 +1,11 @@
 .todo-header{
     background-color: #5793f2;
 }
+.content {
+    max-width: 99.1%;
+    margin: auto;
+    padding: 0;
+}
+.footer-link{
+    color: black;
+}

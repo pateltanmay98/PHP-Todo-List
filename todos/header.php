@@ -8,13 +8,3 @@
 <script type="text/javascript" src="../Library/jquery.dataTables.min.js"></script>
 <script type="text/javascript" src="../Library/jQUery-validation.js"></script>
 <script type="text/javascript" src="../Library/Bootstrap/js/bootstrap.min.js"></script>
-<style>
-    .content {
-        max-width: 99.1%;
-        margin: auto;
-        padding: 0;
-    }
-    .footer-link{
-        color: black;
-    }
-</style>
