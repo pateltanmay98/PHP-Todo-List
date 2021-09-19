@@ -27,7 +27,7 @@
                 </h3>
               </div>
               <div class="col-auto">
-                <button type="button" class="btn btn-primary">Logout</button>
+                <button type="button" id="logout" name="logout" class="btn btn-primary">Logout</button>
               </div>
             </div>
         </div>
@@ -244,7 +244,32 @@
 
               }); // AJAX End
             }
-          });
+          }); // End of DELETE Operation
+
+          // Logout Operation
+          $('#logout').on('click', function(){
+            var result = confirm( "Do you really want to Logout" );
+
+            if(result)
+            {
+              $.ajax({
+              url: 'logout.php',
+              type: 'post',
+              dataType: 'json',
+              success: function(response)
+              {
+                if(response.status == 1)
+                {
+                  window.open("login.php","_self");
+                }
+                else
+                {
+                  alert("Some error occured");
+                }
+              }
+            }); // End of AJAX
+            }
+          }); // End of Logout
 
         }); // End of Ready Function Bracket
       </script>
