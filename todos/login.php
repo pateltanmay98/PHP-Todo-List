@@ -37,7 +37,7 @@
       }
       else
       {
-        echo "<script> alert('Invalid authentication information') </script>";
+        $_SESSION['message'] = "Invalid authentication information";
         header('Location: index.php');
       }
     }

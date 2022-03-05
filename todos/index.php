@@ -117,7 +117,8 @@
                   if (response.status == 1) {
                     alert(response.data);
                     $('#addNewTodo').val(''); // Empty and reset the values
-                    window.location.reload(true); // Reload Page
+                    $('#todoDataTable').DataTable().ajax.reload(); // Reload data table after update record
+                    // window.location.reload(true); // Reload Page
                   }
                   else {
                     alert(response.data);
